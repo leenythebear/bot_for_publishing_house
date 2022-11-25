@@ -1,11 +1,12 @@
-import telegram
 import os
 from dotenv import load_dotenv
 
 import logging
+# import dialogflow
 
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from google_api import detect_intent_texts
 
 
 logging.basicConfig(
