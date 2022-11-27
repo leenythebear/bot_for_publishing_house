@@ -26,8 +26,11 @@ if __name__ == "__main__":
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             message = event.message
             user_id = event.user_id
-            msg_text = detect_intent_texts(project_id=os.environ['PROJECT_ID'],
+            is_fallback, msg_text = detect_intent_texts(project_id=project_id,
                                            session_id=user_id,
                                            text=message,
                                            language_code='RU')
-            echo(user_id, msg_text, vk_api)
+            if not is_fallback:
+                echo(user_id, msg_text, vk_api)
+
+

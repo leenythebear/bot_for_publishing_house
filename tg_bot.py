@@ -32,7 +32,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
     user_id = update.effective_user.id
-    msg_text = detect_intent_texts(project_id=os.environ['PROJECT_ID'], session_id=user_id, text=update.message.text, language_code='RU')
+    _, msg_text = detect_intent_texts(project_id=os.environ['PROJECT_ID'], session_id=user_id, text=update.message.text, language_code='RU')
     update.message.reply_text(msg_text)
 
 
