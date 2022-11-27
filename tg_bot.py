@@ -8,11 +8,18 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from google_api import detect_intent_texts
 
 
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
+logger = logging.getLogger('support_bot')
 
-logger = logging.getLogger(__name__)
+
+class BotLogsHandler(logging.Handler):
+    def __init__(self, telegram_bot, telegram_chat_id):
+        super().__init__()
+        self.telegram_bot = telegram_bot
+        self.telegram_chat_id = telegram_chat_id
+
+    def emit(self, record: logging.LogRecord) -> None:
+        log_entry = self.format(record)
+        self.telegram_bot.send_message(chat_id=self.telegram_chat_id, text=log_entry)
 
 
 def start(update: Update, context: CallbackContext) -> None:
@@ -36,10 +43,15 @@ def echo(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(msg_text)
 
 
-def main() -> None:
-    """Start the bot."""
+if __name__ == '__main__':
+    logging.basicConfig(
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        level=logging.WARNING
+    )
+
     load_dotenv()
     token = os.environ['BOT_TOKEN']
+    chat_id = os.environ['CHAT_ID']
     updater = Updater(token)
     dispatcher = updater.dispatcher
 
@@ -52,10 +64,12 @@ def main() -> None:
     updater.start_polling()
 
     updater.idle()
+    bot = dispatcher.bot
+    bot_logs_handler = BotLogsHandler(telegram_bot=bot, telegram_chat_id=chat_id)
+    logger.addHandler(bot_logs_handler)
 
 
-if __name__ == '__main__':
-    main()
+
 
 
 
