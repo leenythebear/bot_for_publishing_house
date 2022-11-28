@@ -30,6 +30,7 @@ GOOGLE_APPLICATION_CREDENTIALS=путь до файла, полученного 
 
    ```python3 create_intent.py```
 
+- Скрипт ``google_api.py`` является вспомогательным скриптом, отдельный запуск не требуется
 
 - Скрипты ``tg_bot.py`` и ``vk_bot.py`` запускают ботов в Telegram и VK
 
