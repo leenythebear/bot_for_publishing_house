@@ -37,7 +37,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Help!')
 
 
-def echo(update: Update, context: CallbackContext) -> None:
+def send_telegram_message(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
     user_id = update.effective_user.id
     _, msg_text = detect_intent_texts(project_id=os.environ['PROJECT_ID'], session_id=user_id, text=update.message.text, language_code='RU')
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     dispatcher.add_handler(CommandHandler("help", help_command))
 
     dispatcher.add_handler(
-        MessageHandler(Filters.text & ~Filters.command, echo))
+        MessageHandler(Filters.text & ~Filters.command, send_telegram_message))
 
     updater.start_polling()
 
