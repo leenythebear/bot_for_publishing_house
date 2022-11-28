@@ -62,7 +62,7 @@ if __name__ == '__main__':
     bot_logs_handler = BotLogsHandler(telegram_token=tg_token,
                                       telegram_chat_id=tg_chat_id)
     logger.addHandler(bot_logs_handler)
-    logger.info('Телеграм бот запущен')
+    logger.info('Telegram  бот запущен')
 
     updater = Updater(tg_token)
     dispatcher = updater.dispatcher
