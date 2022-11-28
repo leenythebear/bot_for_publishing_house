@@ -51,9 +51,20 @@ if __name__ == '__main__':
     )
 
     load_dotenv()
-    token = os.environ['BOT_TOKEN']
-    chat_id = os.environ['CHAT_ID']
-    updater = Updater(token)
+    tg_token = os.environ['TG_TOKEN']
+    tg_chat_id = os.environ['TG_CHAT_ID']
+
+    logging.basicConfig(
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        level=logging.INFO
+    )
+    logger.setLevel(logging.INFO)
+    bot_logs_handler = BotLogsHandler(telegram_token=tg_token,
+                                      telegram_chat_id=tg_chat_id)
+    logger.addHandler(bot_logs_handler)
+    logger.info('Телеграм бот запущен')
+
+    updater = Updater(tg_token)
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
@@ -65,9 +76,8 @@ if __name__ == '__main__':
     updater.start_polling()
 
     updater.idle()
-    bot = dispatcher.bot
-    bot_logs_handler = BotLogsHandler(telegram_bot=bot, telegram_chat_id=chat_id)
-    logger.addHandler(bot_logs_handler)
+
+
 
 
 
