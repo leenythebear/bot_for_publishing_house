@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from vk_api.longpoll import VkEventType, VkLongPoll
 
 from google_api import detect_intent_texts
-from tg_bot import BotLogsHandler
+from logger import BotLogsHandler
 
 logger = logging.getLogger("support_bot")
 
