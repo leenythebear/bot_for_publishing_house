@@ -21,11 +21,6 @@ def start(update: Update, context: CallbackContext) -> None:
     )
 
 
-def help_command(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /help is issued."""
-    update.message.reply_text("Help!")
-
-
 def send_telegram_message(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
     user_id = update.effective_user.id
@@ -39,11 +34,6 @@ def send_telegram_message(update: Update, context: CallbackContext) -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        level=logging.WARNING,
-    )
-
     load_dotenv()
     tg_token = os.environ["TG_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
@@ -63,8 +53,6 @@ if __name__ == "__main__":
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
-
     dispatcher.add_handler(
         MessageHandler(Filters.text & ~Filters.command, send_telegram_message)
     )
