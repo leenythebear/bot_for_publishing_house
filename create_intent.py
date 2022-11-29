@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 
@@ -41,8 +42,20 @@ def create_intent(
 def main():
     load_dotenv()
     project_id = os.environ["PROJECT_ID"]
-    with open("phrases.json", "r") as questions_json:
+    parser = argparse.ArgumentParser(
+        description="Бот для техничксой поддержки"
+    )
+    parser.add_argument(
+        "-p",
+        "--json_path",
+        help="Путь к json-файлу с фразами для обучения",
+        default="phrases.json",
+    )
+    args = parser.parse_args()
+
+    with open(args.json_path, "r") as questions_json:
         training_phrases = json.load(questions_json)
+
     for theme, theme_data in training_phrases.items():
         questions = theme_data["questions"]
         answer = theme_data["answer"]
